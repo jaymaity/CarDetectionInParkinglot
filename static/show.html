@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+      <title>SFU Parking lot space</title>
+      <style>
+         .tblA td div{
+         width:58px;
+         height:60px;
+         margin:auto;
+         text-align: center;
+	 padding-top:20px;
+         }
+         .tblB td div{
+         width:90px;
+         height:60px;
+         margin:auto;
+         text-align: center;
+	 padding-top:20px;
+         }
+         .tblC td div{
+         width:122px;
+         height:60px;
+         margin:auto;
+         text-align: center;
+	 padding-top:20px;
+         }
+
+         .free{
+         background-color:green;
+         }
+         .parked{
+         background-color:red;
+         }
+         .notsure{
+         background-color:yellow;
+         }
+      </style>
+<script>
+$(document).ready(function(){
+ var ajax_call = function() {
+  var jqxhr = $.get( "/getcurrent", function(data) {
+info = json.parse(data);
+  	alert( "success" );
+	})
+	  .done(function(data) {
+	    alert( "second success" );
+	  })
+	  .fail(function() {
+	    alert( "error" );
+	  })
+	  .always(function() {
+	    alert( "finished" );
+	  });
+}
+
+var interval = 1000 * 30; // where X is your every X minutes
+
+setInterval(ajax_call, interval);
+});
+</script>
+   </head>
+   <body bgcolor=white>
+      <div class="container">
+         <div class="row">
+            <div class="col-md-8" style="text-align:center">
+               <img src="http://0.0.0.0:5000/static/source/11-25%2014.08.17.jpg" width="1000px">
+            </div>
+            <div class="col-md-4"> Info </div>
+         </div>
+         <div class="row">
+            <table class="tblA" border="1">
+               <tr>
+                  <td id="A_1">
+                     <div>A1</div>
+                  </td>
+                  <td id="A_2">
+                     <div>A2</div>
+                  </td>
+                  <td id="A_3">
+                     <div>A3</div>
+                  </td>
+                  <td id="A_4">
+                     <div>A4</div>
+                  </td>
+                  <td id="A_5">
+                     <div>A5</div>
+                  </td>
+                  <td id="A_6">
+                     <div>A6</div>
+                  </td>
+                  <td id="A_7">
+                     <div>A7</div>
+                  </td>
+                  <td id="A_8">
+                     <div>A8</div>
+                  </td>
+                  <td id="A_9">
+                     <div>A9</div>
+                  </td>
+                  <td id="A_10">
+                     <div>A10</div>
+                  </td>
+                  <td id="A_11">
+                     <div>A11</div>
+                  </td>
+                  <td id="A_12">
+                     <div>A12</div>
+                  </td>
+                  <td id="A_13">
+                     <div>A13</div>
+                  </td>
+                  <td id="A_14">
+                     <div>A14</div>
+                  </td>
+                  <td id="A_15">
+                     <div>A15</div>
+                  </td>
+                  <td id="A_16">
+                     <div>A16</div>
+                  </td>
+                  <td id="A_17">
+                     <div>A17</div>
+                  </td>
+                  <td id="A_18">
+                     <div>A18</div>
+                  </td>
+               </tr>
+            </table>
+            <table class="tblB" border="1">
+               <tr>
+                  <td id="B_1">
+                     <div>B1</div>
+                  </td>
+                  <td id="B_2">
+                     <div>B2</div>
+                  </td>
+                  <td id="B_3">
+                     <div>B3</div>
+                  </td>
+                  <td id="B_4">
+                     <div>B4</div>
+                  </td>
+                  <td id="B_5">
+                     <div>B5</div>
+                  </td>
+                  <td id="B_6">
+                     <div>B6</div>
+                  </td>
+                  <td id="B_7">
+                     <div>B7</div>
+                  </td>
+                  <td id="B_8">
+                     <div>B8</div>
+                  </td>
+                  <td id="B_9">
+                     <div>B9</div>
+                  </td>
+                  <td id="B_10">
+                     <div>B10</div>
+                  </td>
+                  <td id="B_11">
+                     <div>B11</div>
+                  </td>
+                  <td id="B_12">
+                     <div>B12</div>
+                  </td>
+               </tr>
+            </table>
+            <table class="tblC" border="1">
+               <tr>
+                  <td id="C_1">
+                     <div>C1</div>
+                  </td>
+                  <td id="C_2">
+                     <div>C2</div>
+                  </td>
+                  <td id="C_3">
+                     <div>C3</div>
+                  </td>
+                  <td id="C_4">
+                     <div>C4</div>
+                  </td>
+                  <td id="C_5">
+                     <div>C5</div>
+                  </td>
+                  <td id="C_6">
+                     <div>C6</div>
+                  </td>
+                  <td id="C_7">
+                     <div>C7</div>
+                  </td>
+                  <td id="C_8">
+                     <div>C8</div>
+                  </td>
+                  <td id="C_9">
+                     <div>C9</div>
+                  </td>
+               </tr>
+            </table>
+         </div>
+      </div>
+   </body>
+</html>

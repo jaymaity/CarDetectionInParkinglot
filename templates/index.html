@@ -45,10 +45,28 @@
 	    left: 78px;
 	    opacity: 0.92;
 	}
+         .head2{
+            font-family: monospace;
+          margin-top: 86px;
+          margin-left: 382px;
+          font-size: xx-large;
+            font-weight: bold;
+            color:grey;
+
+         }
+         .labelspot{
+            height: 20px;
+            width: 20px;
+            display: inline-block;
+            vertical-align: middle;
+            font-family: monospace;
+         }
       </style>
       <script>
-         function staus(occupied, parked){
-          if(parked > 0.7){
+         var count_free = 0;
+         function staus(occupied, vacant){
+          if(vacant > 0.7){
+             count_free += 1;
             return "free";
           } else if(occupied > 0.7){
            return "parked";
@@ -63,13 +81,14 @@
          parkrooms = Object.keys(info["preddata"]);
          
          preddata = info["preddata"];
+              count_free = 0;
          for (key in parkrooms){
            $('#'+parkrooms[key]).removeClass();
            classtoadd = staus(preddata[parkrooms[key]]["Occupied"], preddata[parkrooms[key]]["Vacant"]);
            $('#'+parkrooms[key]).addClass(classtoadd);
            $('#inputimg').attr("src","/static/source/"+info["filename"])
          }
-           
+          $('#timepred').text(count_free);
          	})
          	  .done(function(data) {
          	    
@@ -228,6 +247,20 @@
             </table>
          </div>
       </div>
-      <div id="layer"></div>
+      <div id="layer">
+
+         <div style="display:block;font-size: 22pt;position: relative;top: -1px;left: 0px;text-align: center;">
+            <div style="background-color: #a6192e;color: white;">SFU Parking lot C</div>
+         </div>
+         
+         <div style="display: inline-block;position: relative;top:50px;left:364px">
+            <div style="background-color:#FF4136;" class="labelspot"></div> <span>Parked</span>
+            <div style="background-color:#AAAAAA;margin-left:20px" class="labelspot"></div> <span>Vacant</span>
+            <div style="background-color:#0074D9;margin-left:20px" class="labelspot"></div> <span>Not Sure</span>
+         </div>
+
+         <div class="head2">Free spots: <span id="timepred" style="font-weight:900"></span></div>
+
+      </div>
    </body>
 </html>

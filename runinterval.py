@@ -2,7 +2,7 @@ import Predict as pdt
 import os
 import time
 import datetime
-
+import numpy as np
 INPUT_IMAGE_PATH = "/home/jay/BigData/MLProj732/dl/static/source"
 OUTPUT_DATA_PATH = "/home/jay/BigData/MLProj732/dl/static/data/"
 INTERVAL = 1
@@ -17,7 +17,7 @@ for (dirpath, dirnames, filenames) in os.walk(INPUT_IMAGE_PATH):
     files.extend(filenames)
 
 while True:
-
+    files = np.random.permutation(files)
     for file in files:
         timebefore = datetime.datetime.now()
         predval = pred.predict_full_image(os.path.splitext(file)[0])

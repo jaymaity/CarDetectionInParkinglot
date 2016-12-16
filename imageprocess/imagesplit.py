@@ -7,6 +7,10 @@ class imagesplit:
     INPUT_MAP_PATH = "/home/jay/BigData/MLProj732/dl/imageprocess/imagemap"
     OUTPUT_IMAGE_PATH = "/home/jay/BigData/MLProj732/dl/static/predimages/"
 
+    def __init__(self, is_live=False):
+        if is_live:
+            self.INPUT_IMAGE_PATH = "/home/jay/BigData/MLProj732/dl/static/datalive/"
+
     def split_image(self, input_path, image_name, map_file_name, output_folder, extension, identifier):
         """
         Split sfu parking lot image
@@ -39,13 +43,13 @@ class imagesplit:
         self.split_image(input_image_path, actual_image_name, input_map_path + "/L3.txt", image_dir, file_extension, "C_")
 
     @staticmethod
-    def split_sfu_image(image_name):
+    def split_sfu_image(image_name,is_live=False):
         """
         Split SFU images
         :param image_name:
         :return:
         """
 
-        imgspl = imagesplit()
+        imgspl = imagesplit(is_live)
         imgspl.split_all_sfu_images(image_name, imgspl.INPUT_IMAGE_PATH, imgspl.INPUT_MAP_PATH, imgspl.OUTPUT_IMAGE_PATH, 'jpg')
         return imgspl.OUTPUT_IMAGE_PATH + str(image_name) + "/"

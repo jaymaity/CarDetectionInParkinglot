@@ -48,13 +48,14 @@ class Predict:
         print(data)
         return data
 
-    def predict_full_image(self, img_path):
+    def predict_full_image(self, img_path, is_live=False):
         """
         Split the image and predict each component
         :param img_path: Path of the original image
         :return:
         """
-        output_path = imagesplit.imagesplit.split_sfu_image(img_path)
+        #split_img_obj = imagesplit.imagesplit(is_live)
+        output_path = imagesplit.imagesplit.split_sfu_image(img_path, is_live)
         files = []
 
         lot = dict()

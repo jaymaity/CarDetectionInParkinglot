@@ -1,305 +1,335 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-      <title>SFU Parking lot space</title>
-      <style>
-         .tblA td div{
-         width:60px;
-         height:60px;
-         margin:auto;
-         text-align: center;
-         padding-top:20px;
-         }
-         .tblB td div{
-         width:92px;
-         height:60px;
-         margin:auto;
-         text-align: center;
-         padding-top:20px;
-         }
-         .tblC td div{
-         width:124px;
-         height:60px;
-         margin:auto;
-         text-align: center;
-         padding-top:20px;
-         }
-         .free{
-         background-color:#AAAAAA;
-         }
-         .parked{
-           background-color:#FF4136;
-         }
-         .notsure{
-         background-color:#0074D9;
-         }
-	#layer{
-	    position: absolute;
-	    background-color: #f2dede;
-	    width: 1000px;
-	    height: 229px;
-	    top: 8px;
-	    left: 78px;
-	    opacity: 0.92;
-	}
-         .head2{
-            font-family: monospace;
-          margin-top: 86px;
-          margin-left: 382px;
-          font-size: xx-large;
-            font-weight: bold;
-            color:grey;
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <title>SFU Parking lot space</title>
+    <style>
+        .tblA td div {
+            width: 60px;
+            height: 60px;
+            margin: auto;
+            text-align: center;
+            padding-top: 20px;
+        }
 
-         }
-         .labelspot{
+        .tblB td div {
+            width: 92px;
+            height: 60px;
+            margin: auto;
+            text-align: center;
+            padding-top: 20px;
+        }
+
+        .tblC td div {
+            width: 124px;
+            height: 60px;
+            margin: auto;
+            text-align: center;
+            padding-top: 20px;
+        }
+
+        .free {
+            background-color: #AAAAAA;
+        }
+
+        .parked {
+            background-color: #FF4136;
+        }
+
+        .notsure {
+            background-color: #0074D9;
+        }
+
+        #layer {
+            position: absolute;
+            background-color: #f2dede;
+            width: 1000px;
+            height: 229px;
+            top: 8px;
+            left: 78px;
+            opacity: 0.92;
+        }
+
+        .head2 {
+            font-family: monospace;
+            margin-top: 86px;
+            margin-left: 382px;
+            font-size: xx-large;
+            font-weight: bold;
+            color: grey;
+
+        }
+
+        .labelspot {
             height: 20px;
             width: 20px;
             display: inline-block;
             vertical-align: middle;
             font-family: monospace;
-         }
+        }
 
-         #live{
-             -webkit-animation-name: liveanimate; /* Safari 4.0 - 8.0 */
-             -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
-             -webkit-animation-iteration-count: infinite; /* Safari 4.0 - 8.0 */
-             animation-name: liveanimate;
-             animation-duration: 2s;
-             animation-iteration-count: infinite;
-         }
+        #live {
+            -webkit-animation-name: liveanimate; /* Safari 4.0 - 8.0 */
+            -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+            -webkit-animation-iteration-count: infinite; /* Safari 4.0 - 8.0 */
+            animation-name: liveanimate;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+        }
 
-         /* Safari 4.0 - 8.0 */
-         @-webkit-keyframes liveanimate {
-             0%   {background-color:red}
-             50%  {background-color:orange}
-             75%   {background-color:orange}
-             100%  {background-color:red}
-         }
-         /* Standard syntax */
-         @keyframes liveanimate {
-             0%   {background-color:red}
-             50%  {background-color:orange}
-             75%   {background-color:orange}
-             100%  {background-color:red}
-         }
-
-      </style>
-      <script>
-         var count_free = 0;
-         function staus(occupied, vacant){
-          if(vacant > 0.7){
-             count_free += 1;
-            return "free";
-          } else if(occupied > 0.7){
-           return "parked";
-         }else{
-         return "notsure";
-         }
-         }
-         $(document).ready(function(){
-          var ajax_call = function() {
-           var jqxhr = $.get( "/getcurrent", function(data) {
-         info = JSON.parse(data);
-         parkrooms = Object.keys(info["preddata"]);
-         
-         preddata = info["preddata"];
-              count_free = 0;
-         for (key in parkrooms){
-           $('#'+parkrooms[key]).removeClass();
-           classtoadd = staus(preddata[parkrooms[key]]["Occupied"], preddata[parkrooms[key]]["Vacant"]);
-
-           $('#'+parkrooms[key]).addClass(classtoadd);
-
-            if(info["islive"] == 1){
-               $('#inputimg').attr("src","/static/datalivebackup/"+info["filename"])
-               $('#live').show();
+        /* Safari 4.0 - 8.0 */
+        @-webkit-keyframes liveanimate {
+            0% {
+                background-color: red
             }
-            else{
-               $('#live').hide();
-               $('#inputimg').attr("src","/static/source/"+info["filename"])
+            50% {
+                background-color: orange
+            }
+            75% {
+                background-color: orange
+            }
+            100% {
+                background-color: red
+            }
+        }
+
+        /* Standard syntax */
+        @keyframes liveanimate {
+            0% {
+                background-color: red
+            }
+            50% {
+                background-color: orange
+            }
+            75% {
+                background-color: orange
+            }
+            100% {
+                background-color: red
+            }
+        }
+
+    </style>
+    <script>
+        var count_free = 0;
+        function staus(occupied, vacant) {
+            if (vacant > 0.7) {
+                count_free += 1;
+                return "free";
+            } else if (occupied > 0.7) {
+                return "parked";
+            } else {
+                return "notsure";
+            }
+        }
+        $(document).ready(function () {
+            var ajax_call = function () {
+                var jqxhr = $.get("/getcurrent", function (data) {
+                    info = JSON.parse(data);
+                    parkrooms = Object.keys(info["preddata"]);
+
+                    preddata = info["preddata"];
+                    count_free = 0;
+                    for (key in parkrooms) {
+                        $('#' + parkrooms[key]).removeClass();
+                        classtoadd = staus(preddata[parkrooms[key]]["Occupied"], preddata[parkrooms[key]]["Vacant"]);
+
+                        $('#' + parkrooms[key]).addClass(classtoadd);
+
+                        if (info["islive"] == 1) {
+                            $('#inputimg').attr("src", "/static/images/backup/" + info["filename"])
+                            $('#live').show();
+                        }
+                        else {
+                            $('#live').hide();
+                            $('#inputimg').attr("src", "/static/images/input/" + info["filename"])
+                        }
+
+                    }
+                    $('#timepred').text(count_free);
+                })
+                        .done(function (data) {
+
+                        })
+                        .fail(function (error) {
+                            console.log(error);
+                        })
+                        .always(function () {
+
+                        });
             }
 
-         }
-          $('#timepred').text(count_free);
-         	})
-         	  .done(function(data) {
-         	    
-         	  })
-         	  .fail(function(error) {
-         	    console.log(error);
-         	  })
-         	  .always(function() {
-         	    
-         	  });
-         }
-         
-         var interval = 1000 * 5;
-         ajax_call();
-         setInterval(ajax_call, interval);
-         });
-      </script>
-   </head>
-   <body bgcolor=black>
-      <div class="container">
-         <div class="row">
-            <div class="col-md-8" style="padding-left:70px">
-               <img id="inputimg" src="./static/source/11-25%2014.08.17.jpg" width="1000px">
-            </div>
-            <div class="col-md-4"> Info </div>
-         </div>
-         <div class="row">
-            <table class="tblA">
-               <tr>
-                  <td id="A_1">
-                     <div>A1</div>
-                  </td>
-                  <td id="A_2">
-                     <div>A2</div>
-                  </td>
-                  <td id="A_3">
-                     <div>A3</div>
-                  </td>
-                  <td id="A_4">
-                     <div>A4</div>
-                  </td>
-                  <td id="A_5">
-                     <div>A5</div>
-                  </td>
-                  <td id="A_6">
-                     <div>A6</div>
-                  </td>
-                  <td id="A_7">
-                     <div>A7</div>
-                  </td>
-                  <td id="A_8">
-                     <div>A8</div>
-                  </td>
-                  <td id="A_9">
-                     <div>A9</div>
-                  </td>
-                  <td id="A_10">
-                     <div>A10</div>
-                  </td>
-                  <td id="A_11">
-                     <div>A11</div>
-                  </td>
-                  <td id="A_12">
-                     <div>A12</div>
-                  </td>
-                  <td id="A_13">
-                     <div>A13</div>
-                  </td>
-                  <td id="A_14">
-                     <div>A14</div>
-                  </td>
-                  <td id="A_15">
-                     <div>A15</div>
-                  </td>
-                  <td id="A_16">
-                     <div>A16</div>
-                  </td>
-                  <td id="A_17">
-                     <div>A17</div>
-                  </td>
-                  <td id="A_18">
-                     <div>A18</div>
-                  </td>
-               </tr>
-            </table>
-            <table class="tblB">
-               <tr>
-                  <td id="B_1">
-                     <div>B1</div>
-                  </td>
-                  <td id="B_2">
-                     <div>B2</div>
-                  </td>
-                  <td id="B_3">
-                     <div>B3</div>
-                  </td>
-                  <td id="B_4">
-                     <div>B4</div>
-                  </td>
-                  <td id="B_5">
-                     <div>B5</div>
-                  </td>
-                  <td id="B_6">
-                     <div>B6</div>
-                  </td>
-                  <td id="B_7">
-                     <div>B7</div>
-                  </td>
-                  <td id="B_8">
-                     <div>B8</div>
-                  </td>
-                  <td id="B_9">
-                     <div>B9</div>
-                  </td>
-                  <td id="B_10">
-                     <div>B10</div>
-                  </td>
-                  <td id="B_11">
-                     <div>B11</div>
-                  </td>
-                  <td id="B_12">
-                     <div>B12</div>
-                  </td>
-               </tr>
-            </table>
-            <table class="tblC" >
-               <tr>
-                  <td id="C_1">
-                     <div>C1</div>
-                  </td>
-                  <td id="C_2">
-                     <div>C2</div>
-                  </td>
-                  <td id="C_3">
-                     <div>C3</div>
-                  </td>
-                  <td id="C_4">
-                     <div>C4</div>
-                  </td>
-                  <td id="C_5">
-                     <div>C5</div>
-                  </td>
-                  <td id="C_6">
-                     <div>C6</div>
-                  </td>
-                  <td id="C_7">
-                     <div>C7</div>
-                  </td>
-                  <td id="C_8">
-                     <div>C8</div>
-                  </td>
-                  <td id="C_9">
-                     <div>C9</div>
-                  </td>
-               </tr>
-            </table>
-         </div>
-      </div>
-      <div id="layer">
+            var interval = 1000 * 5;
+            ajax_call();
+            setInterval(ajax_call, interval);
+        });
+    </script>
+</head>
+<body bgcolor=black>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8" style="padding-left:70px">
+            <img id="inputimg" src="./static/images/input/11-25 17.12.17.jpg" width="1000px">
+        </div>
+        <div class="col-md-4"> Info</div>
+    </div>
+    <div class="row">
+        <table class="tblA">
+            <tr>
+                <td id="A_1">
+                    <div>A1</div>
+                </td>
+                <td id="A_2">
+                    <div>A2</div>
+                </td>
+                <td id="A_3">
+                    <div>A3</div>
+                </td>
+                <td id="A_4">
+                    <div>A4</div>
+                </td>
+                <td id="A_5">
+                    <div>A5</div>
+                </td>
+                <td id="A_6">
+                    <div>A6</div>
+                </td>
+                <td id="A_7">
+                    <div>A7</div>
+                </td>
+                <td id="A_8">
+                    <div>A8</div>
+                </td>
+                <td id="A_9">
+                    <div>A9</div>
+                </td>
+                <td id="A_10">
+                    <div>A10</div>
+                </td>
+                <td id="A_11">
+                    <div>A11</div>
+                </td>
+                <td id="A_12">
+                    <div>A12</div>
+                </td>
+                <td id="A_13">
+                    <div>A13</div>
+                </td>
+                <td id="A_14">
+                    <div>A14</div>
+                </td>
+                <td id="A_15">
+                    <div>A15</div>
+                </td>
+                <td id="A_16">
+                    <div>A16</div>
+                </td>
+                <td id="A_17">
+                    <div>A17</div>
+                </td>
+                <td id="A_18">
+                    <div>A18</div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblB">
+            <tr>
+                <td id="B_1">
+                    <div>B1</div>
+                </td>
+                <td id="B_2">
+                    <div>B2</div>
+                </td>
+                <td id="B_3">
+                    <div>B3</div>
+                </td>
+                <td id="B_4">
+                    <div>B4</div>
+                </td>
+                <td id="B_5">
+                    <div>B5</div>
+                </td>
+                <td id="B_6">
+                    <div>B6</div>
+                </td>
+                <td id="B_7">
+                    <div>B7</div>
+                </td>
+                <td id="B_8">
+                    <div>B8</div>
+                </td>
+                <td id="B_9">
+                    <div>B9</div>
+                </td>
+                <td id="B_10">
+                    <div>B10</div>
+                </td>
+                <td id="B_11">
+                    <div>B11</div>
+                </td>
+                <td id="B_12">
+                    <div>B12</div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblC">
+            <tr>
+                <td id="C_1">
+                    <div>C1</div>
+                </td>
+                <td id="C_2">
+                    <div>C2</div>
+                </td>
+                <td id="C_3">
+                    <div>C3</div>
+                </td>
+                <td id="C_4">
+                    <div>C4</div>
+                </td>
+                <td id="C_5">
+                    <div>C5</div>
+                </td>
+                <td id="C_6">
+                    <div>C6</div>
+                </td>
+                <td id="C_7">
+                    <div>C7</div>
+                </td>
+                <td id="C_8">
+                    <div>C8</div>
+                </td>
+                <td id="C_9">
+                    <div>C9</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div id="layer">
 
-         <div style="display:block;font-size: 22pt;position: relative;top: -1px;left: 0px;text-align: center;">
-            <div style="background-color: #a6192e;color: white;">SFU Parking lot C</div>
-         </div>
+    <div style="display:block;font-size: 22pt;position: relative;top: -1px;left: 0px;text-align: center;">
+        <div style="background-color: #a6192e;color: white;">SFU Parking lot C</div>
+    </div>
 
-         <div id="live" style="display:block;font-size: 22pt;position: relative;top: 16px;left: 16px;text-align: center; width:75px;">
-            <div style="color: white;">Live</div>
-         </div>
-         
-         <div style="display: inline-block;position: relative;top:50px;left:364px">
-            <div style="background-color:#FF4136;" class="labelspot"></div> <span>Parked</span>
-            <div style="background-color:#AAAAAA;margin-left:20px" class="labelspot"></div> <span>Vacant</span>
-            <div style="background-color:#0074D9;margin-left:20px" class="labelspot"></div> <span>Not Sure</span>
-         </div>
+    <div id="live"
+         style="display:block;font-size: 22pt;position: relative;top: 16px;left: 16px;text-align: center; width:75px;">
+        <div style="color: white;">Live</div>
+    </div>
 
-         <div class="head2">Free spots: <span id="timepred" style="font-weight:900"></span></div>
+    <div style="display: inline-block;position: relative;top:50px;left:364px">
+        <div style="background-color:#FF4136;" class="labelspot"></div>
+        <span>Parked</span>
+        <div style="background-color:#AAAAAA;margin-left:20px" class="labelspot"></div>
+        <span>Vacant</span>
+        <div style="background-color:#0074D9;margin-left:20px" class="labelspot"></div>
+        <span>Not Sure</span>
+    </div>
 
-      </div>
-   </body>
+    <div class="head2">Free spots: <span id="timepred" style="font-weight:900"></span></div>
+
+</div>
+</body>
 </html>

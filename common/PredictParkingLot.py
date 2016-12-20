@@ -95,8 +95,3 @@ class PredictParkingLot:
             pred = self.predict_single(output_path+file_ins)
             lot[os.path.splitext(file_ins)[0]] = pred
         return lot
-
-# img_splt = imagesplit.imagesplit()
-# output_path = img_splt.split_image("/home/jay/BigData/ML/parkinglot/web/static/images/input/11-25 17.12.17.jpg",
-#                                    "/home/jay/BigData/ML/parkinglot/common/configs/imagemap/",
-#                                    "/home/jay/BigData/ML/parkinglot/web/static/images/intermediate/")

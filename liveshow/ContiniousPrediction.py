@@ -75,7 +75,7 @@ class ContiniousPrediction:
                 filejson["predtime"] = predtime.microseconds
 
                 text_file = open(self.output_data_path + self.output_file, "w")
-                text_file.write(str(filejson).replace("'", "\""))
+                text_file.write(str(filejson).replace("'","\"").replace("u\"","\""))
                 text_file.close()
 
                 if self.interval > 0:

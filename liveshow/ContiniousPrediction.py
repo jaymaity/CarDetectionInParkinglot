@@ -48,7 +48,7 @@ class ContiniousPrediction:
         """
         pred = pdt.PredictParkingLot()
         filejson = dict()
-
+        count = 1
         while True:
             files = []
             for (dirpath, dirnames, filenames) in os.walk(self.input_image_path):
@@ -73,10 +73,12 @@ class ContiniousPrediction:
                 filejson["filename"] = file_ins
                 filejson["preddata"] = predval
                 filejson["predtime"] = predtime.microseconds
-
-                text_file = open(self.output_data_path + self.output_file, "w")
+                filename, extension = self.output_file.split(".")
+                text_file = open(self.output_data_path + filename + str(count)+"."+extension, "w")
                 text_file.write(str(filejson).replace("'","\"").replace("u\"","\""))
                 text_file.close()
+
+                count += 1
 
                 if self.interval > 0:
                     print("Taking "+str(self.interval)+" seconds time off")

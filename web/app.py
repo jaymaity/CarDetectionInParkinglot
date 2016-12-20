@@ -1,4 +1,6 @@
 import json
+import os
+from random import randint
 from flask import Flask, jsonify, render_template, request
 
 
@@ -18,7 +20,11 @@ def index():
 
 @app.route('/getcurrent', methods=['GET', 'POST'])
 def predict():
-    with open(config["OutputDataPath"] + config["OutputFileName"], 'r') as content_file:
+
+    filename, extension = config["OutputFileName"].split(".")
+    maxno = len(os.listdir(config["OutputDataPath"]))
+    fileno = randint(1, maxno)
+    with open(config["OutputDataPath"] + filename+str(fileno)+"."+extension, 'r') as content_file:
         content = content_file.read()
     return content
 
